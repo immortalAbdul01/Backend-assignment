@@ -1,3 +1,4 @@
+// CourseService.java
 package com.assignment.assignment.service;
 
 import com.assignment.assignment.model.Course;
@@ -22,11 +23,11 @@ public class CourseService {
         return courseRepository.findAll();
     }
 
-    public Optional<Course> getCourseById(Long id) {
+    public Optional<Course> getCourseById(String id) {
         return courseRepository.findById(id);
     }
 
-    public void deleteCourse(Long id) {
+    public void deleteCourse(String id) {
         courseRepository.deleteById(id);
     }
 }

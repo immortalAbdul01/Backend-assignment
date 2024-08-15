@@ -1,11 +1,14 @@
+// CourseController.java
 package com.assignment.assignment.controller;
 
 import com.assignment.assignment.model.Course;
 import com.assignment.assignment.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/courses")
@@ -25,12 +28,15 @@ public class CourseController {
     }
 
     @GetMapping("/{id}")
-    public Course getCourseById(@PathVariable Long id) {
-        return courseService.getCourseById(id).orElse(null);
+    public ResponseEntity<Course> getCourseById(@PathVariable String id) {
+        Optional<Course> course = courseService.getCourseById(id);
+        return course.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
-    public void deleteCourse(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteCourse(@PathVariable String id) {
         courseService.deleteCourse(id);
+        return ResponseEntity.noContent().build();
     }
 }

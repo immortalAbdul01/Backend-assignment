@@ -1,11 +1,14 @@
+// CourseInstanceController.java
 package com.assignment.assignment.controller;
 
 import com.assignment.assignment.model.CourseInstance;
 import com.assignment.assignment.service.CourseInstanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/instances")
@@ -24,13 +27,16 @@ public class CourseInstanceController {
         return courseInstanceService.getInstancesByYearAndSemester(year, semester);
     }
 
-    @GetMapping("/{year}/{semester}/{courseId}")
-    public CourseInstance getCourseInstance(@PathVariable int year, @PathVariable int semester, @PathVariable Long courseId) {
-        return courseInstanceService.getCourseInstance(courseId).orElse(null);
+    @GetMapping("/{year}/{semester}/{id}")
+    public ResponseEntity<CourseInstance> getInstanceById(@PathVariable int year, @PathVariable int semester, @PathVariable String id) {
+        Optional<CourseInstance> courseInstance = courseInstanceService.getInstanceById(id);
+        return courseInstance.map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @DeleteMapping("/{year}/{semester}/{courseId}")
-    public void deleteCourseInstance(@PathVariable int year, @PathVariable int semester, @PathVariable Long courseId) {
-        courseInstanceService.deleteCourseInstance(courseId);
+    @DeleteMapping("/{year}/{semester}/{id}")
+    public ResponseEntity<Void> deleteCourseInstance(@PathVariable int year, @PathVariable int semester, @PathVariable String id) {
+        courseInstanceService.deleteCourseInstance(id);
+        return ResponseEntity.noContent().build();
     }
 }

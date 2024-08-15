@@ -1,3 +1,4 @@
+// CourseInstanceService.java
 package com.assignment.assignment.service;
 
 import com.assignment.assignment.model.CourseInstance;
@@ -22,11 +23,11 @@ public class CourseInstanceService {
         return courseInstanceRepository.findByYearAndSemester(year, semester);
     }
 
-    public Optional<CourseInstance> getCourseInstance(Long id) {
+    public Optional<CourseInstance> getInstanceById(String id) {
         return courseInstanceRepository.findById(id);
     }
 
-    public void deleteCourseInstance(Long id) {
+    public void deleteCourseInstance(String id) {
         courseInstanceRepository.deleteById(id);
     }
 }
