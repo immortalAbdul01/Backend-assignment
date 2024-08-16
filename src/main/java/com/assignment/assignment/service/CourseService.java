@@ -1,4 +1,3 @@
-// CourseService.java
 package com.assignment.assignment.service;
 
 import com.assignment.assignment.model.Course;
@@ -15,19 +14,23 @@ public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
 
+    // Create a new course
     public Course createCourse(Course course) {
         return courseRepository.save(course);
     }
 
+    // Get all courses
     public List<Course> getAllCourses() {
         return courseRepository.findAll();
     }
 
-    public Optional<Course> getCourseById(String id) {
-        return courseRepository.findById(id);
+    // Get a course by code
+    public Optional<Course> getCourseByCode(String code) {
+        return courseRepository.findByCode(code);
     }
 
-    public void deleteCourse(String id) {
-        courseRepository.deleteById(id);
+    // Delete a course by code
+    public void deleteCourseByCode(String code) {
+        courseRepository.deleteByCode(code);
     }
 }

@@ -1,4 +1,3 @@
-// CourseInstanceController.java
 package com.assignment.assignment.controller;
 
 import com.assignment.assignment.model.CourseInstance;
@@ -7,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +18,9 @@ public class CourseInstanceController {
     private CourseInstanceService courseInstanceService;
 
     @PostMapping
-    public CourseInstance createCourseInstance(@RequestBody CourseInstance courseInstance) {
-        return courseInstanceService.createCourseInstance(courseInstance);
+    public ResponseEntity<CourseInstance> createCourseInstance(@Valid @RequestBody CourseInstance courseInstance) {
+        CourseInstance savedInstance = courseInstanceService.createCourseInstance(courseInstance);
+        return ResponseEntity.ok(savedInstance);
     }
 
     @GetMapping("/{year}/{semester}")
