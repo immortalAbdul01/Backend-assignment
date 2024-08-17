@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  backend:
+    image: immortalabdul/assignment-backend:latest
+    container_name: assignment-backend
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2000:2000"
+    environment:
+      - SPRING_DATA_MONGODB_URI=mongodb+srv://assignment:root@assignment.943km.mongodb.net/your_database_name?retryWrites=true&w=majority&appName=assignment
+
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo:5.0
+    container_name: assignment-mongo
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=assignment
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=your_database_name
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo-data:/data/db
+
+volumes:
+  mongo-data:
