@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface CourseInstanceRepository extends MongoRepository<CourseInstance, String> {
     List<CourseInstance> findByYearAndSemester(int year, int semester);
+    List<CourseInstance> findByCourseIdAndYearAndSemester(String courseId, int year, int semester);
 }
